@@ -1,0 +1,166 @@
+<h1 >Questions hinter prototype</h1>
+<div class="questions-container">
+  <div id="question"></div>
+</div>
+<button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Show all questions</button>
+<style>
+
+body {
+ text-align: center;
+}
+
+h1{
+  font-weight: 800;
+  margin: 0px;
+  padding: 2vw;
+  font-size: 6vw;
+  background-color: #444;
+  color: #fff;
+}
+
+
+.questions-container {
+  display:block;
+  margin: auto;
+  width: 50%;
+ text-align: center;
+ margin-top: 5vw;
+}
+
+.hint{
+ margin-bottom: 2vw;
+   font-size: 3vw;
+}
+
+.hidden{
+  display: none;
+}
+
+.question{
+  font-size: 3vw;
+  margin-bottom: 2vw;
+  cursor: pointer;
+}
+
+.btnall{
+  font-size: 2vw;
+  background-color: #279;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+}
+
+.btnhint{
+  font-weight: 800;
+  font-size: 2vw;
+  background-color: #fecc4c;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+}
+
+
+</style>
+<script>
+
+//VARIABLES
+const questionContainer = document.getElementById("question");
+const Question = [
+  {question: "What are electrons?",
+  hints: {First: "They are round", Second: "They are part of the electron", Third: "They move"}
+},
+  {question: "What are atoms?",
+  hints: { First: "They are round", Second: "They are part of the electron", Third: "They move"}
+},
+  {question: "What is electricity?",
+  hints: {First: "Thor's spirit", Second: "Energy", Third: "Electron's moving"}
+},
+  {question: "What are apples?",
+  hints: {First: "They are round", Second: "Weapon against scientist like Newton", Third: "Stuff"}
+},
+  {question: "What are electrons?",
+  hints: {First: "They are round", Second: "They are part of the electron",Third: "They move"}
+},
+];
+//FUNCTIONS
+function buildQuestion() {
+  const output = [];
+  Question.forEach(
+    (Current, index) => {
+const hints = [];
+var i = 0;
+for(hint in Current.hints) {
+  hints.push(
+    `<div class='hidden hint'name="hints" id="${index}${i}" >
+      ${Current.hints[hint]}
+    </div>`
+  );
+  i++;
+
+}
+
+output.push(
+  `<div  name="visible">
+  <div class='question' onclick="hideAllOthers('${index}')"> <b>${Current.question} </b></div>
+  <div id="hint${index}">
+  <div> ${hints.join('')} </div>
+  <button id="embededHint${index}"
+  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}')"> I have no clue! </button></div>
+  </div>`
+);
+});
+questionContainer.innerHTML = output.join('');
+}
+//
+
+function showAllQuestions(){
+  for (var i = 0, element; element = questionsN[i]; i++) {
+    element.classList.remove('hidden');
+    buttonsN[i].classList.add('hidden');
+}
+for (var i = 0, element; element = hintsN[i]; i++) {
+  element.classList.add('hidden');
+}
+nexthint = 0;
+document.getElementById("showAllButton").style.display = "none";
+}
+
+function hideAllOthers(n){
+  for (var i = 0, element; element = questionsN[i]; i++) {
+    if (i == n) {
+  buttonsN[i].classList.remove('hidden');
+} else {
+  element.classList.add('hidden');
+  buttonsN[i].classList.add('hidden');
+}
+  }
+  document.getElementById("showAllButton").style.display = "inline-block";
+}
+
+var nexthint = 0;
+function showHint(n,m){
+  const hints = document.getElementById(`${n}${nexthint}`);
+  if (m == nexthint) {
+    alert("There are no more hints!");
+  } else {
+  hints.classList.remove('hidden');
+  nexthint++;
+  }
+}
+
+//display question
+buildQuestion();
+//create needed constants
+const questionsN = document.getElementsByName('visible');
+const buttonsN = document.getElementsByName('button');
+const hintsN = document.getElementsByName('hints');
+
+</script>
