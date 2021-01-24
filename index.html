@@ -2,7 +2,7 @@
 <div class="questions-container">
   <div id="question"></div>
 </div>
-<button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Show all questions</button>
+<button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Alle Aufgaben anzeigen</button>
 <style>
 
 body {
@@ -22,7 +22,7 @@ h1{
 .questions-container {
   display:block;
   margin: auto;
-  width: 50%;
+  width: 60%;
  text-align: center;
  margin-top: 5vw;
 }
@@ -76,7 +76,7 @@ const questionContainer = document.getElementById("question");
 const Question = [
   {question: "Aufgabe 1",
   hints: {
-1: "gesucht : m(NH<sub>4</sub>NO<sub>3</sub>) = ?	gegeben : V<sub>Ls</sub> = 1 L  c(NH<sub>4</sub>NO<sub>3</sub>) = 1,5 mol/L",
+1: "gesucht : m(NH<sub>4</sub>NO<sub>3</sub>) = ?	<br>gegeben : V<sub>Ls</sub> = 1 L  c(NH<sub>4</sub>NO<sub>3</sub>) = 1,5 mol/L",
 2:"Diese Aufgabe wird in 2 Schritten gelöst",
 3:"Welche Größe kann man anhand von V<sub>Ls</sub> und c berechnen?",
 4:"Schritt 1 : n(NH<sub>4</sub>NO<sub>3</sub>) berechnen",
@@ -88,7 +88,7 @@ const Question = [
 
 {question: "Aufgabe 2",
 hints: {
-1:"gesucht : n(C<sub>2</sub>H<sub>6</sub>O) = ?		gegeben : V(C<sub>2</sub>H<sub>6</sub>O)  = 75 mL ρ(C<sub>2</sub>H<sub>6</sub>O) = 0,79 g/mL",
+1:"gesucht : n(C<sub>2</sub>H<sub>6</sub>O) = ?	<br>	gegeben : V(C<sub>2</sub>H<sub>6</sub>O)  = 75 mL ρ(C<sub>2</sub>H<sub>6</sub>O) = 0,79 g/mL",
 2:"Diese Aufgabe wird in 2 Schritten gelöst",
 3:"Welche Größe kann man anhand von V und ρ berechnen?",
 4:"Schritt 1 : m(C<sub>2</sub>H<sub>6</sub>O) berechnen",
@@ -100,7 +100,7 @@ hints: {
 
 {question: "Aufgabe 3",
 hints: {
-1:"gesucht : V(CO<sub>2</sub>) = ?		gegeben : m(CO<sub>2</sub>) = 10 g Standardbedingungen",
+1:"gesucht : V(CO<sub>2</sub>) = ?	<br>	gegeben : m(CO<sub>2</sub>) = 10 g Standardbedingungen",
 2: "Diese Aufgabe wird in 2 Schritten gelöst",
 3:"Welche Größe kann man anhand von m berechnen?",
 4:"Schritt 1: n(CO<sub>2</sub>) berechnen",
@@ -113,7 +113,7 @@ hints: {
 
 {question: "Aufgabe 4",
 hints: {
-1:"gesucht : m(NH<sub>3</sub>) = ?		gegeben : N(NH<sub>3</sub>) = 8,45 ∙ 10<sup>26</sup>",
+1:"gesucht : m(NH<sub>3</sub>) = ?	<br>	gegeben : N(NH<sub>3</sub>) = 8,45 ∙ 10<sup>26</sup>",
 2:"Diese Aufgabe wird in 2 Schritten gelöst",
 3:"Welche Größe kann man anhand von N berechnen?",
 4:"Schritt 1: n(NH<sub>3</sub>) berechnen",
@@ -147,7 +147,7 @@ output.push(
   <div id="hint${index}">
   <div> ${hints.join('')} </div>
   <button id="embededHint${index}"
-  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}')"> I have no clue! </button></div>
+  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}')"> Ich möchte einen Tipp</button></div>
   </div>`
 );
 });
@@ -183,7 +183,7 @@ var nexthint = 0;
 function showHint(n,m){
   const hints = document.getElementById(`${n}${nexthint}`);
   if (m == nexthint) {
-    alert("There are no more hints!");
+    alert("Es gibt keine Tipps mehr!");
   } else {
   hints.classList.remove('hidden');
   nexthint++;
