@@ -26,11 +26,24 @@ h1{
  text-align: center;
  margin-top: 5vw;
 }
-
+/* */
 .hint{
- margin-bottom: 2vw;
-   font-size: 3vw;
+margin-bottom: 0vw;
+   font-size: 0vw;
+ overflow: hidden;
+ -webkit-transition: all .5s ease-in-out;
+ line-height: 0;
+ color: transparent;
 }
+
+/*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
+.hint-shown{
+  font-size: 2vw;
+  line-height: 1.5;
+  color: black;
+  margin-bottom: 2vw;
+}
+/*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
 
 .hidden{
   display: none;
@@ -113,7 +126,7 @@ hints: {
 
 {question: "Aufgabe 4",
 hints: {
-1:"gesucht: m(NH<sub>3</sub>) = ?	<br>	gegeben: N(NH<sub>3</sub>) = 8,45 ∙ 10<sup>26</sup>",
+1:"gesucht: m(NH<sub>3</sub>) = ?	<br>	gegeben : N(NH<sub>3</sub>) = 8,45 ∙ 10<sup>26</sup>",
 2:"Diese Aufgabe wird in 2 Schritten gelöst",
 3:"Welche Größe kann man anhand von N berechnen?",
 4:"Schritt 1: n(NH<sub>3</sub>) berechnen",
@@ -133,9 +146,9 @@ const hints = [];
 var i = 0;
 for(hint in Current.hints) {
   hints.push(
-    `<div class='hidden hint'name="hints" id="${index}${i}" >
+    `<div class='hint'name="hints" id="${index}${i}" >
       ${Current.hints[hint]}
-    </div>`
+    </div>` //hidden class removed, when removed it works.
   );
   i++;
 
@@ -161,7 +174,8 @@ function showAllQuestions(){
     buttonsN[i].classList.add('hidden');
 }
 for (var i = 0, element; element = hintsN[i]; i++) {
-  element.classList.add('hidden');
+  element.classList.remove('hint-shown');
+  //originalmente solo "element.classList.add('hidden')"
 }
 nexthint = 0;
 document.getElementById("showAllButton").style.display = "none";
@@ -186,6 +200,9 @@ function showHint(n,m){
     alert("Es gibt keine Tipps mehr!");
   } else {
   hints.classList.remove('hidden');
+  //hints.classList.remove('hint');// transition testing
+  hints.classList.add('hint-shown');// transition testing
+
   nexthint++;
   }
 }
