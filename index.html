@@ -3,6 +3,9 @@
   <div id="question"></div>
 </div>
 <button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Alle Aufgaben anzeigen</button>
+<!-- <div id="clock" class="timer"></div>-->
+<div id="app" class="hidden"></div>
+<div id="popup" class="hidden"></div> <!--Just starting! -->
 <style>
 
 body {
@@ -10,30 +13,53 @@ body {
 }
 
 h1{
-  font-weight: 800;
-  margin: 0px;
-  padding: 2vw;
-  font-size: 6vw;
-  background-color: #444;
-  color: #fff;
+font-weight: 800;
+margin: 0px;
+padding: 2vw;
+font-size: 6vw;
+background-color: #444;
+color: #fff;
 }
-
 
 .questions-container {
-  display:block;
-  margin: auto;
-  width: 60%;
- text-align: center;
- margin-top: 5vw;
+display:block;
+margin: auto;
+width: 60%;
+margin-top: 5vw;
 }
+/*TRICK*/
+.question{
+font-size: 3vw;
+line-height: 1.2;
+/*background-color: red;*/
+padding: 0.5vw;
+/*border-color: blue;
+border-radius: 10px;
+border: 0.5vw;*/
+cursor: pointer;
+-webkit-transition: all 1.0s ease-in-out;
+margin-bottom: 2vw;
+opacity: 100%;
+}
+
+.question-invisible {
+font-size: 0vw;
+line-height: 0;
+margin-bottom: 0vw;
+padding: 0vw;
+opacity: 0%;
+}
+/* TRICK*/
+
 /* */
 .hint{
 margin-bottom: 0vw;
-   font-size: 0vw;
- overflow: hidden;
- -webkit-transition: all .5s ease-in-out;
- line-height: 0;
- color: transparent;
+font-size: 0vw;
+height: 0px;
+opacity: 0%;
+-webkit-transition: all 0.5s ease-in-out;
+line-height: 0;
+color: transparent;
 }
 
 /*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
@@ -42,6 +68,8 @@ margin-bottom: 0vw;
   line-height: 1.5;
   color: black;
   margin-bottom: 2vw;
+  height: auto;
+  opacity: 100%;
 }
 /*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
 
@@ -49,11 +77,6 @@ margin-bottom: 0vw;
   display: none;
 }
 
-.question{
-  font-size: 3vw;
-  margin-bottom: 2vw;
-  cursor: pointer;
-}
 
 .btnall{
   font-size: 2vw;
@@ -65,7 +88,22 @@ margin-bottom: 0vw;
   cursor: pointer;
   margin-bottom: 20px;
   margin-top: 5vw;
+  position: absolute;
+  top: 10vw;
+  left: 1vw;
+  height: auto;
+    -webkit-transition: all 0.5s ease-in-out;
 }
+
+.btnall-hidden{
+  /*margin-bottom: 0vw;
+  font-size: 0vw;
+  height: 0px;*/
+  opacity: 0%;
+  /*line-height: 0;
+  height: auto;*/
+  -webkit-transition: all 0.5s ease-in-out;
+  }
 
 .btnhint{
   font-weight: 800;
@@ -80,10 +118,63 @@ margin-bottom: 0vw;
   margin-top: 5vw;
 }
 
+.timer {
+  font-size: 2vw;
+  height: 2vw;
+  width: 7vw;
+  background-color: #279;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+  position: absolute;
+  top: 10vw;
+  left: 80vw;
+}
+/*EMPIEZA EL RELOJ*/
+.base-timer {
+  position: absolute;
+  width: 18.223vw;
+  height: auto;
+  top: 12vw;
+  right: 6vw;
 
+}
+.base-timer__svg {
+  transform: scaleX(-1);}
+.base-timer__circle {
+  fill: none;
+  stroke: none;}
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;}
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;}
+.base-timer__path-remaining.green {
+  color: rgb(65, 184, 131);}
+.base-timer__path-remaining.red {
+  color: red;}
+.base-timer__label {
+  position: absolute;
+  width: 18.223vw;
+  height: 18.223vw;
+  top: 0;
+  display: flex;
+  align-items: center; /*FLEx prop*/
+  justify-content: center;/*FLEx prop*/
+  font-size: 7vw;}
+/*FIN DEL RELOJ*/
 </style>
 <script>
-
 //VARIABLES
 const questionContainer = document.getElementById("question");
 const Question = [
@@ -148,37 +239,44 @@ for(hint in Current.hints) {
   hints.push(
     `<div class='hint'name="hints" id="${index}${i}" >
       ${Current.hints[hint]}
-    </div>` //hidden class removed, when removed it works.
+    </div>`
   );
   i++;
 
 }
 
 output.push(
-  `<div  name="visible">
-  <div class='question' onclick="hideAllOthers('${index}')"> <b>${Current.question} </b></div>
+  `<div  name="visible" >
+  <div class='question' name="lasttest" onclick="hideAllOthers('${index}')"> <b>${Current.question} </b></div>
   <div id="hint${index}">
   <div> ${hints.join('')} </div>
   <button id="embededHint${index}"
-  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}')"> Ich möchte einen Tipp</button></div>
+  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}'),startTimer()"> Ich möchte einen Tipp</button></div>
   </div>`
 );
 });
 questionContainer.innerHTML = output.join('');
 }
-//
 
 function showAllQuestions(){
   for (var i = 0, element; element = questionsN[i]; i++) {
-    element.classList.remove('hidden');
+    last[i].classList.remove('question-invisible');
     buttonsN[i].classList.add('hidden');
 }
 for (var i = 0, element; element = hintsN[i]; i++) {
   element.classList.remove('hint-shown');
-  //originalmente solo "element.classList.add('hidden')"
 }
 nexthint = 0;
-document.getElementById("showAllButton").style.display = "none";
+clearInterval(timerInterval); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+document.getElementById("app").classList.add('hidden'); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+allow = "yes";//*CONSIDERAR EN CONVERTIR EN FUNCION*/
+document.getElementById("base-timer-label").innerHTML = "2:00";  //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+
+
+document.getElementById("showAllButton").classList.add('btnall-hidden');
+/*document.getElementById("showAllButton").classList.add('hidden');*/
+
+/*document.getElementById("showAllButton").style.display = "none";*/
 }
 
 function hideAllOthers(n){
@@ -186,11 +284,13 @@ function hideAllOthers(n){
     if (i == n) {
   buttonsN[i].classList.remove('hidden');
 } else {
-  element.classList.add('hidden');
+  //element.classList.add('hidden');
+  last[i].classList.add('question-invisible');
   buttonsN[i].classList.add('hidden');
 }
   }
   document.getElementById("showAllButton").style.display = "inline-block";
+  document.getElementById("showAllButton").classList.remove('btnall-hidden');
 }
 
 var nexthint = 0;
@@ -198,14 +298,16 @@ function showHint(n,m){
   const hints = document.getElementById(`${n}${nexthint}`);
   if (m == nexthint) {
     alert("Es gibt keine Tipps mehr!");
-  } else {
+  } else {if (allow == "yes"){
   hints.classList.remove('hidden');
-  //hints.classList.remove('hint');// transition testing
-  hints.classList.add('hint-shown');// transition testing
-
-  nexthint++;
+  hints.classList.add('hint-shown');
+  nexthint++;}
   }
 }
+
+// Set the date we're counting down to
+let allow = "yes";
+
 
 //display question
 buildQuestion();
@@ -213,5 +315,56 @@ buildQuestion();
 const questionsN = document.getElementsByName('visible');
 const buttonsN = document.getElementsByName('button');
 const hintsN = document.getElementsByName('hints');
+const last = document.getElementsByName('lasttest');
+/*RELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOJ*/
+const FULL_DASH_ARRAY = 283; const ALERT_THRESHOLD = 5;
+const COLOR_CODES = {info: {color: "green"}, alert: {color: "red",threshold: ALERT_THRESHOLD}};
+var initialTime = 20; var timeLeft = 120; let timerInterval = null; let remainingPathColor = COLOR_CODES.info.color;
+document.getElementById("app").innerHTML = `<div class="base-timer"><svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path id="base-timer-path-remaining" stroke-dasharray="283" class="base-timer__path-remaining ${remainingPathColor}"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "></path></g></svg><span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span></div>`;
+//startTimer();
+
+function startTimer() {
+  if (allow == "yes"){
+    var timeLeft = 120;
+    allow = "no";
+    document.getElementById("app").classList.remove('hidden');
+  timerInterval = setInterval(() => {
+
+    timeLeft -= 1;
+    document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+    setCircleDasharray();
+    setRemainingPathColor(timeLeft);
+    if (timeLeft === 0) {
+      clearInterval(timerInterval);
+      allow = "yes";
+      document.getElementById("app").classList.add('hidden');
+    }
+  }, 1000);} else {alert("Nimm dir noch etwas Zeit zum Überlegen :)")}
+}
+
+function formatTime(time) {// UTIL
+  const minutes = Math.floor(time / 60); let seconds = time % 60;//UTIL
+  if (seconds < 10) {seconds = `0${seconds}`;}//UTIL
+  return `${minutes}:${seconds}`;}//UTIL
+
+function setRemainingPathColor(timeLeft) {
+  const { alert, info } = COLOR_CODES; if (timeLeft <= alert.threshold) {
+    document.getElementById("base-timer-path-remaining").classList.remove(info.color);
+    document.getElementById("base-timer-path-remaining").classList.add(alert.color);
+  }}
+
+function setCircleDasharray() {
+  const circleDasharray = `${( /*timefraction*/((timeLeft / initialTime) - (1 / initialTime) * (1 - (timeLeft / initialTime))) * FULL_DASH_ARRAY).toFixed(0)} 283`;
+  document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);}
+
 
 </script>
