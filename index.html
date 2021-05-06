@@ -29,7 +29,7 @@ margin-top: 5vw;
 }
 /*TRICK*/
 .question{
-font-size: 3vw;
+font-size: 1.5vw;
 line-height: 1.2;
 /*background-color: red;*/
 padding: 0.5vw;
@@ -79,7 +79,7 @@ color: transparent;
 
 
 .btnall{
-  font-size: 2vw;
+  font-size: 1.5vw;
   background-color: #279;
   color: #fff;
   border: 0px;
@@ -140,7 +140,7 @@ color: transparent;
   width: 18.223vw;
   height: auto;
   top: 12vw;
-  right: 6vw;
+  right: 3vw;
 
 }
 .base-timer__svg {
@@ -177,7 +177,7 @@ color: transparent;
 <script>
 //VARIABLES
 const questionContainer = document.getElementById("question");
-const Question = [
+const Question = [[
   {question: "Aufgabe 1",
   hints: {
 1: "gesucht: m(NH<sub>4</sub>NO<sub>3</sub>) = ?	<br>gegeben : V<sub>Ls</sub> = 1 L,  c(NH<sub>4</sub>NO<sub>3</sub>) = 1,5 mol/L",
@@ -226,12 +226,57 @@ hints: {
 7:"Welche Formel verbindet die Größen m und n miteinander?",
 8:"Formel n = m/M umstellen und anwenden"}
 },
-];
+],
+
+[
+{question: "<b>Aufgabe 1</b>: Wie viel L Wasserdampf entstehen, wenn 1,44 L Sauerstoff mit genügend Wasserstoff unter Standardbedingungen reagieren?",
+hints: {
+1:"Wie lautet der 1. Schritt bei stöchiometrischen Berechnungen?",
+2: "1. Schritt: Reaktionsgleichung aufstellen.",
+3:"Welches ist die gesuchte respektiv bekannte Größe?",
+4: "Wie lautet der 2. Schritt bei stöchiometrischen Berechnungen?",
+5: "2. Schritt: n(bekannt) berechnen.",
+6:"Welche Formel kannst du anwenden um n(bekannt), d.h. n(O<sub>2</sub>) zu berechnen?",
+7: "Welche Formel verbindet die Größen n und V miteinander?",
+8:"Formel n = V/V<sub>Vm</sub> anwenden.",
+9:"Wie lautet der 3. Schritt bei stöchiometrischen Berechnungen?",
+10:"3. Schritt: Stoffmengenverhältnis aufstellen.",
+11:"Achte auf die Koeffizienten wenn du das Stoffmengenverhältnis zwischen n(H<sub>2</sub>) und n(O<sub>2</sub>) aufstellst.",
+12:"Wie kannst du n(H<sub>2</sub>) mithilfe von n(O<sub>2</sub>) ausdrücken?",
+13:"Wie lautet der 4. Schritt?",
+14:"4. Schritt: n(H<sub>2</sub>) mithilfe von n(O<sub>2</sub>) berechnen.",
+15:"Wie lautet der 5. Schritt?",
+16:"5. Schritt: die unbekannte Größe, d.h. V(H<sub>2</sub>) berechnen.",
+17:"Formel n = V/V<sub>Vm</sub> umstellen und anwenden." }
+},
+
+{question: "Aufgabe 2: Bei der Photosynthese nehmen die grünen Pflanzen Kohlenstoffdioxid und Wasser auf um daraus Traubenzucker (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) und Sauerstoff herzustellen. Welches Volumen an Sauerstoff entsteht bei dieser Reaktion,wenn dabei 25 g Traubenzucker gebildet werden?",
+hints: {
+1:"Wie lautet der 1. Schritt bei stöchiometrischen Berechnungen?",
+2:"Welches ist die gesuchte respektiv bekannte Größe?",
+3:"Wie lautet der 2. Schritt bei stöchiometrischen Berechnungen?",
+4:"Welche Formel kannst du anwenden um n(bekannt), d.h. n(C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) zu berechnen?",
+5:"Welche Formel verbindet die Größen n und m miteinander?",
+6:"Wie lautet der 3. Schritt bei stöchiometrischen Berechnungen?",
+7:"Wie kannst du n(O<sub>2</sub>) mithilfe von n(C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) ausdrücken und berechnen?",
+8:"Welche Größe wird beim 5. Schritt berechnet?",
+9:"Welche Formel verbindet die Größen n und V miteinander?" }
+},
+
+{question: "Aufgabe 3: Bei der Reaktion von Phosphorsäure (Wasserstoffphosphat) mit Magnesiumhydroxid entstehen Magnesiumphosphat und Wasser. Berechne die Masse an Magnesiumphosphat die entsteht, wenn 800 mL Phosphorsäure mit einer Stoffmengenkonzentration von 2,5 mol/L vollständig reagieren.",
+hints: {
+1:"Welches ist die gesuchte respektiv bekannte Größe?",
+2: "2. Schritt: n(bekannt), hier n(H<sub>3</sub>PO<sub>4</sub>) berechnen.",
+3: "Welche Formel verbindet die Größen c und V miteinander?",
+4:"Wie kannst du n(unbekannt) mithilfe von n(H<sub>3</sub>PO<sub>4</sub>) ausdrücken und berechnen?",
+5:"Wie kann man die unbekannte Größe nun mithilfe von n(H<sub>3</sub>PO<sub>4</sub>) berechnen?"}
+}
+]];
 
 //FUNCTIONS
 function buildQuestion() {
   const output = [];
-  Question.forEach(
+  Question[1].forEach(
     (Current, index) => {
 const hints = [];
 var i = 0;
@@ -270,7 +315,7 @@ nexthint = 0;
 clearInterval(timerInterval); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
 document.getElementById("app").classList.add('hidden'); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
 allow = "yes";//*CONSIDERAR EN CONVERTIR EN FUNCION*/
-document.getElementById("base-timer-label").innerHTML = "2:00";  //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+document.getElementById("base-timer-label").innerHTML = "1:00";  //*CONSIDERAR EN CONVERTIR EN FUNCION*/
 
 
 document.getElementById("showAllButton").classList.add('btnall-hidden');
@@ -319,7 +364,7 @@ const last = document.getElementsByName('lasttest');
 /*RELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOJ*/
 const FULL_DASH_ARRAY = 283; const ALERT_THRESHOLD = 5;
 const COLOR_CODES = {info: {color: "green"}, alert: {color: "red",threshold: ALERT_THRESHOLD}};
-var initialTime = 20; var timeLeft = 120; let timerInterval = null; let remainingPathColor = COLOR_CODES.info.color;
+var initialTime = 20; var timeLeft = 60; let timerInterval = null; let remainingPathColor = COLOR_CODES.info.color;
 document.getElementById("app").innerHTML = `<div class="base-timer"><svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <g class="base-timer__circle">
       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
@@ -334,7 +379,7 @@ document.getElementById("app").innerHTML = `<div class="base-timer"><svg class="
 
 function startTimer() {
   if (allow == "yes"){
-    var timeLeft = 120;
+    var timeLeft = 60;
     allow = "no";
     document.getElementById("app").classList.remove('hidden');
   timerInterval = setInterval(() => {
