@@ -1,0 +1,455 @@
+<h1 >Hilfestellung</h1>
+<div class="questions-container">
+  <div id="question"></div>
+</div>
+<button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Alle Aufgaben anzeigen</button>
+<!-- <div id="clock" class="timer"></div>-->
+<div id="app" class="hidden"></div>
+<div id="popup" class="hidden"></div> <!--Just starting! -->
+
+
+<div><label for="Subject">Choose a Subject:</label>
+
+<select name="Subject" id="sub">
+ <option value="volvo">Volvo</option>
+ <option value="saab">Saab</option>
+ <option value="mercedes">Mercedes</option>
+ <option value="audi">Audi</option>
+</select></div>
+
+
+<style>
+
+body {
+ text-align: center;
+}
+
+h1{
+font-weight: 800;
+margin: 0px;
+padding: 2vw;
+font-size: 6vw;
+background-color: #444;
+color: #fff;
+}
+
+.questions-container {
+display:block;
+margin: auto;
+width: 60%;
+margin-top: 5vw;
+}
+/*TRICK*/
+.question{
+font-size: 1.5vw;
+line-height: 1.2;
+/*background-color: red;*/
+padding: 0.5vw;
+/*border-color: blue;
+border-radius: 10px;
+border: 0.5vw;*/
+cursor: pointer;
+-webkit-transition: all 1.0s ease-in-out;
+margin-bottom: 2vw;
+opacity: 100%;
+}
+
+.question-invisible {
+font-size: 0vw;
+line-height: 0;
+margin-bottom: 0vw;
+padding: 0vw;
+opacity: 0%;
+}
+/* TRICK*/
+
+/* */
+.hint{
+margin-bottom: 0vw;
+font-size: 0vw;
+height: 0px;
+opacity: 0%;
+-webkit-transition: all 0.5s ease-in-out;
+line-height: 0;
+color: transparent;
+}
+
+/*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
+.hint-shown{
+  font-size: 2vw;
+  line-height: 1.5;
+  color: black;
+  margin-bottom: 2vw;
+  height: auto;
+  opacity: 100%;
+}
+/*CREATING THE CLASS TO TOGGLE TO WHEN HINT SHOULD BE VISIBLE*/
+
+.hidden{
+  display: none;
+}
+
+
+.btnall{
+  font-size: 1.5vw;
+  background-color: #279;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+  position: absolute;
+  top: 10vw;
+  left: 1vw;
+  height: auto;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.btnall-hidden{
+  /*margin-bottom: 0vw;
+  font-size: 0vw;
+  height: 0px;*/
+  opacity: 0%;
+  /*line-height: 0;
+  height: auto;*/
+  -webkit-transition: all 0.5s ease-in-out;
+  }
+
+.btnhint{
+  font-weight: 800;
+  font-size: 2vw;
+  background-color: #fecc4c;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+}
+
+.timer {
+  font-size: 2vw;
+  height: 2vw;
+  width: 7vw;
+  background-color: #279;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 2vw;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 5vw;
+  position: absolute;
+  top: 10vw;
+  left: 80vw;
+}
+/*EMPIEZA EL RELOJ*/
+.base-timer {
+  position: absolute;
+  width: 18.223vw;
+  height: auto;
+  top: 12vw;
+  right: 3vw;
+}
+.base-timer__svg {
+  transform: scaleX(-1);}
+.base-timer__circle {
+  fill: none;
+  stroke: none;}
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;}
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;}
+.base-timer__path-remaining.green {
+  color: rgb(65, 184, 131);}
+.base-timer__path-remaining.red {
+  color: red;}
+.base-timer__label {
+  position: absolute;
+  width: 18.223vw;
+  height: 18.223vw;
+  top: 0;
+  display: flex;
+  align-items: center; /*FLEx prop*/
+  justify-content: center;/*FLEx prop*/
+  font-size: 7vw;}
+/*FIN DEL RELOJ*/
+</style>
+<script>
+//VARIABLES
+const questionContainer = document.getElementById("question");
+const Question = [[
+  {question: "Aufgabe 1",
+  hints: {
+1: "gesucht: m(NH<sub>4</sub>NO<sub>3</sub>) = ?	<br>gegeben : V<sub>Ls</sub> = 1 L,  c(NH<sub>4</sub>NO<sub>3</sub>) = 1,5 mol/L",
+2:"Diese Aufgabe wird in 2 Schritten gelöst",
+3:"Welche Größe kann man anhand von V<sub>Ls</sub> und c berechnen?",
+4:"Schritt 1: n(NH<sub>4</sub>NO<sub>3</sub>) berechnen",
+5:"Formel c = n/V<sub>Ls</sub> umstellen und anwenden",
+6:"Schritt 2: m(NH<sub>4</sub>NO<sub>3</sub>) berechnen",
+7:"Welche Formel verbindet die Größen m und n miteinander?",
+8:"Formel n = m/M umstellen und anwenden"}
+},
+
+{question: "Aufgabe 2",
+hints: {
+1:"gesucht: n(C<sub>2</sub>H<sub>6</sub>O) = ?	<br>	gegeben : V(C<sub>2</sub>H<sub>6</sub>O)  = 75 mL, ρ(C<sub>2</sub>H<sub>6</sub>O) = 0,79 g/mL",
+2:"Diese Aufgabe wird in 2 Schritten gelöst",
+3:"Welche Größe kann man anhand von V und ρ berechnen?",
+4:"Schritt 1: m(C<sub>2</sub>H<sub>6</sub>O) berechnen",
+5:"Formel ρ = m/V umstellen und anwenden",
+6:"Schritt 2: n(C<sub>2</sub>H<sub>6</sub>O) berechnen",
+7:"Welche Formel verbindet die Größen m und n miteinander?",
+8:"Formel n = m/M anwenden"}
+},
+
+{question: "Aufgabe 3",
+hints: {
+1:"gesucht: V(CO<sub>2</sub>) = ?	<br>	gegeben : m(CO<sub>2</sub>) = 10 g, Standardbedingungen",
+2: "Diese Aufgabe wird in 2 Schritten gelöst",
+3:"Welche Größe kann man anhand von m berechnen?",
+4:"Schritt 1: n(CO<sub>2</sub>) berechnen",
+5:"Formel n = m/M anwenden",
+6:"Schritt 2: V(CO<sub>2</sub>) berechnen",
+7:"CO<sub>2</sub>: Gas, Bei Standardbedingungen V<sub>m</sub> = 24,5 L/mol",
+8:"Welche Formel verbindet die Größen V und n eines Gases miteinander?",
+9:"Formel n = V/V<sub>m</sub> umstellen und anwenden"}
+},
+
+{question: "Aufgabe 4",
+hints: {
+1:"gesucht: m(NH<sub>3</sub>) = ?	<br>	gegeben : N(NH<sub>3</sub>) = 8,45 ∙ 10<sup>26</sup>",
+2:"Diese Aufgabe wird in 2 Schritten gelöst",
+3:"Welche Größe kann man anhand von N berechnen?",
+4:"Schritt 1: n(NH<sub>3</sub>) berechnen",
+5:"Formel n = N/N<sub>A</sub> anwenden",
+6:"Schritt 2: m(NH<sub>3</sub>) berechnen",
+7:"Welche Formel verbindet die Größen m und n miteinander?",
+8:"Formel n = m/M umstellen und anwenden"}
+},
+],
+
+[
+{question: "<b>Aufgabe 1</b>: Wie viel L Wasserdampf entstehen, wenn 1,44 L Sauerstoff mit genügend Wasserstoff unter Standardbedingungen reagieren?",
+hints: {
+1:"Wie lautet der 1. Schritt bei stöchiometrischen Berechnungen?",
+2: "1. Schritt: Reaktionsgleichung aufstellen.",
+3:"Welches ist die gesuchte respektiv bekannte Größe?",
+4: "Wie lautet der 2. Schritt bei stöchiometrischen Berechnungen?",
+5: "2. Schritt: n(bekannt) berechnen.",
+6:"Welche Formel kannst du anwenden um n(bekannt), d.h. n(O<sub>2</sub>) zu berechnen?",
+7: "Welche Formel verbindet die Größen n und V miteinander?",
+8:"Formel n = V/V<sub>Vm</sub> anwenden.",
+9:"Wie lautet der 3. Schritt bei stöchiometrischen Berechnungen?",
+10:"3. Schritt: Stoffmengenverhältnis aufstellen.",
+11:"Achte auf die Koeffizienten wenn du das Stoffmengenverhältnis zwischen n(H<sub>2</sub>) und n(O<sub>2</sub>) aufstellst.",
+12:"Wie kannst du n(H<sub>2</sub>) mithilfe von n(O<sub>2</sub>) ausdrücken?",
+13:"Wie lautet der 4. Schritt?",
+14:"4. Schritt: n(H<sub>2</sub>) mithilfe von n(O<sub>2</sub>) berechnen.",
+15:"Wie lautet der 5. Schritt?",
+16:"5. Schritt: die unbekannte Größe, d.h. V(H<sub>2</sub>) berechnen.",
+17:"Formel n = V/V<sub>Vm</sub> umstellen und anwenden." }
+},
+
+{question: "Aufgabe 2: Bei der Photosynthese nehmen die grünen Pflanzen Kohlenstoffdioxid und Wasser auf um daraus Traubenzucker (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) und Sauerstoff herzustellen. Welches Volumen an Sauerstoff entsteht bei dieser Reaktion,wenn dabei 25 g Traubenzucker gebildet werden?",
+hints: {
+1:"Wie lautet der 1. Schritt bei stöchiometrischen Berechnungen?",
+2:"Welches ist die gesuchte respektiv bekannte Größe?",
+3:"Wie lautet der 2. Schritt bei stöchiometrischen Berechnungen?",
+4:"Welche Formel kannst du anwenden um n(bekannt), d.h. n(C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) zu berechnen?",
+5:"Welche Formel verbindet die Größen n und m miteinander?",
+6:"Wie lautet der 3. Schritt bei stöchiometrischen Berechnungen?",
+7:"Wie kannst du n(O<sub>2</sub>) mithilfe von n(C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) ausdrücken und berechnen?",
+8:"Welche Größe wird beim 5. Schritt berechnet?",
+9:"Welche Formel verbindet die Größen n und V miteinander?" }
+},
+
+{question: "Aufgabe 3: Bei der Reaktion von Phosphorsäure (Wasserstoffphosphat) mit Magnesiumhydroxid entstehen Magnesiumphosphat und Wasser. Berechne die Masse an Magnesiumphosphat die entsteht, wenn 800 mL Phosphorsäure mit einer Stoffmengenkonzentration von 2,5 mol/L vollständig reagieren.",
+hints: {
+1:"Welches ist die gesuchte respektiv bekannte Größe?",
+2: "2. Schritt: n(bekannt), hier n(H<sub>3</sub>PO<sub>4</sub>) berechnen.",
+3: "Welche Formel verbindet die Größen c und V miteinander?",
+4:"Wie kannst du n(unbekannt) mithilfe von n(H<sub>3</sub>PO<sub>4</sub>) ausdrücken und berechnen?",
+5:"Wie kann man die unbekannte Größe nun mithilfe von n(H<sub>3</sub>PO<sub>4</sub>) berechnen?"}
+}
+],
+[{question: "RG 1 : Schwefeldioxid + Wasser",
+hints: {
+1:"Gib die chemischen Formeln der Edukte an.",
+2:"Bestimme um welche Art von Edukten es sich handelt (Säure? Metall? Metalloxid?...)",
+3:"Nichtmetalloxid + Wasser → ?",
+4:"Die allgemeine RG lautet: Nichtmetalloxid + Wasser → Säure"}
+}
+
+{question: "RG 2: Salpetersäure + Magnesium",
+hints: {
+1:"Gib die chemischen Formeln der Edukte an.",
+2:"Bestimme um welche Art von Edukten es sich handelt (Säure? Metall? Metalloxid?...)",
+3:"Säure + Metall → ?",
+4:"Die allgemeine RG lautet: Säure + unedles Metall → Wasserstoff + Salz",
+5:"Bestimme die Formel des Salzes",
+6:"Bei diesem Salz handelt es sich um eine Verbindung aus Magnesium und der Nitrat-Gruppe"}
+}
+
+{question: "RG 3: Bläusäure + Calciumoxid",
+hints: {
+1:"Gib die chemischen Formeln der Edukte an.",
+2:"Bestimme um welche Art von Edukten es sich handelt (Säure? Metall? Metalloxid?...)",
+3:"Säure + Metalloxid → ?",
+4:"Säure + Metalloxid → Wasser + Salz",
+5:"Bestimme die Formel des Salzes",
+6:"Bei diesem Salz handelt es sich um eine Verbindung aus Calcium und der Cyanid-Gruppe"}
+}
+]
+];
+
+//FUNCTIONS
+function buildQuestion() {
+  const output = [];
+  Question[1].forEach(
+    (Current, index) => {
+const hints = [];
+var i = 0;
+for(hint in Current.hints) {
+  hints.push(
+    `<div class='hint'name="hints" id="${index}${i}" >
+      ${Current.hints[hint]}
+    </div>`
+  );
+  i++;
+
+}
+
+output.push(
+  `<div  name="visible" >
+  <div class='question' name="lasttest" onclick="hideAllOthers('${index}')"> <b>${Current.question} </b></div>
+  <div id="hint${index}">
+  <div> ${hints.join('')} </div>
+  <button id="embededHint${index}"
+  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}'),startTimer()"> Ich möchte einen Tipp</button></div>
+  </div>`
+);
+});
+questionContainer.innerHTML = output.join('');
+}
+
+function showAllQuestions(){
+  for (var i = 0, element; element = questionsN[i]; i++) {
+    last[i].classList.remove('question-invisible');
+    buttonsN[i].classList.add('hidden');
+}
+for (var i = 0, element; element = hintsN[i]; i++) {
+  element.classList.remove('hint-shown');
+}
+nexthint = 0;
+clearInterval(timerInterval); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+document.getElementById("app").classList.add('hidden'); //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+allow = "yes";//*CONSIDERAR EN CONVERTIR EN FUNCION*/
+document.getElementById("base-timer-label").innerHTML = "1:00";  //*CONSIDERAR EN CONVERTIR EN FUNCION*/
+
+
+document.getElementById("showAllButton").classList.add('btnall-hidden');
+/*document.getElementById("showAllButton").classList.add('hidden');*/
+
+/*document.getElementById("showAllButton").style.display = "none";*/
+}
+
+function hideAllOthers(n){
+  for (var i = 0, element; element = questionsN[i]; i++) {
+    if (i == n) {
+  buttonsN[i].classList.remove('hidden');
+} else {
+  //element.classList.add('hidden');
+  last[i].classList.add('question-invisible');
+  buttonsN[i].classList.add('hidden');
+}
+  }
+  document.getElementById("showAllButton").style.display = "inline-block";
+  document.getElementById("showAllButton").classList.remove('btnall-hidden');
+}
+
+var nexthint = 0;
+function showHint(n,m){
+  const hints = document.getElementById(`${n}${nexthint}`);
+  if (m == nexthint) {
+    alert("Es gibt keine Tipps mehr!");
+  } else {if (allow == "yes"){
+  hints.classList.remove('hidden');
+  hints.classList.add('hint-shown');
+  nexthint++;}
+  }
+}
+
+// Set the date we're counting down to
+let allow = "yes";
+
+
+//display question
+buildQuestion();
+//create needed constants
+const questionsN = document.getElementsByName('visible');
+const buttonsN = document.getElementsByName('button');
+const hintsN = document.getElementsByName('hints');
+const last = document.getElementsByName('lasttest');
+/*RELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOJ*/
+const FULL_DASH_ARRAY = 283; const ALERT_THRESHOLD = 5;
+const COLOR_CODES = {info: {color: "green"}, alert: {color: "red",threshold: ALERT_THRESHOLD}};
+var initialTime = 20; var timeLeft = 60; let timerInterval = null; let remainingPathColor = COLOR_CODES.info.color;
+document.getElementById("app").innerHTML = `<div class="base-timer"><svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path id="base-timer-path-remaining" stroke-dasharray="283" class="base-timer__path-remaining ${remainingPathColor}"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "></path></g></svg><span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span></div>`;
+//startTimer();
+
+function startTimer() {
+  if (allow == "yes"){
+    var timeLeft = 60;
+    allow = "no";
+    document.getElementById("app").classList.remove('hidden');
+  timerInterval = setInterval(() => {
+
+    timeLeft -= 1;
+    document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+    setCircleDasharray();
+    setRemainingPathColor(timeLeft);
+    if (timeLeft === 0) {
+      clearInterval(timerInterval);
+      allow = "yes";
+      document.getElementById("app").classList.add('hidden');
+    }
+  }, 1000);} else {alert("Nimm dir noch etwas Zeit zum Überlegen :)")}
+}
+
+function formatTime(time) {// UTIL
+  const minutes = Math.floor(time / 60); let seconds = time % 60;//UTIL
+  if (seconds < 10) {seconds = `0${seconds}`;}//UTIL
+  return `${minutes}:${seconds}`;}//UTIL
+
+function setRemainingPathColor(timeLeft) {
+  const { alert, info } = COLOR_CODES; if (timeLeft <= alert.threshold) {
+    document.getElementById("base-timer-path-remaining").classList.remove(info.color);
+    document.getElementById("base-timer-path-remaining").classList.add(alert.color);
+  }}
+
+function setCircleDasharray() {
+  const circleDasharray = `${( /*timefraction*/((timeLeft / initialTime) - (1 / initialTime) * (1 - (timeLeft / initialTime))) * FULL_DASH_ARRAY).toFixed(0)} 283`;
+  document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);}
+
+
+</script>
