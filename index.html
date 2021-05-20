@@ -479,6 +479,11 @@ function setCircleDasharray() {
   const circleDasharray = `${( /*timefraction*/((timeLeft / initialTime) - (1 / initialTime) * (1 - (timeLeft / initialTime))) * FULL_DASH_ARRAY).toFixed(0)} 283`;
   document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);}
 
+  /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
