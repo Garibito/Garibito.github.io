@@ -4,7 +4,7 @@
 </div>
 <button id="showAllButton" style="display: none;" class="btnall" onclick="showAllQuestions()">Alle Aufgaben anzeigen</button>
 <!-- <div id="clock" class="timer"></div>-->
-<div id="app" class="hidden"></div>
+//<div id="app" class="hidden"></div>
 <div id="popup" class="hidden"></div> <!--Just starting! -->
 <style>
 
@@ -296,7 +296,7 @@ output.push(
   <div id="hint${index}">
   <div> ${hints.join('')} </div>
   <button id="embededHint${index}"
-  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}'),startTimer()"> Ich möchte einen Tipp</button></div>
+  class="hidden btnhint" name="button" onclick="showHint('${index}','${i}')"> Ich möchte einen Tipp</button></div>
   </div>`
 );
 });
