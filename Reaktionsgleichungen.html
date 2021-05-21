@@ -7,10 +7,74 @@
 <!-- <div id="app" class="hidden"></div>-->
 <div id="popup" class="hidden"></div> <!--Just starting! -->
 
-
+<div class="dropdown">
+ <button onclick="myFunction()" class="dropbtn">Thema</button>
+ <div id="myDropdown" class="dropdown-content">
+   <a href="index.html">Quantitative Beziehungen</a>
+   <a href="Stochiometrie.html">Stöchiometrie</a>
+   <a href="Reaktionsgleichungen.html">Reaktionsgleichungen (S/B)</a>
+ </div>
+</div>
 
 <style>
+/* Dropdown Button */
+.dropbtn {
+ background-color: #3498DB;
+ color: white;
+ padding: 16px;
+ font-size: 16px;
+ border: none;
+ cursor: pointer;
+}
 
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+ background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+ position: relative;
+ display: inline-block;
+
+ font-size: 1.5vw;
+ background-color: #279;
+ color: #fff;
+ border: 0px;
+ border-radius: 3px;
+ /*padding: 2vw;*/
+ cursor: pointer;
+ margin-bottom: 20px;
+ margin-top: 5vw;
+ position: absolute;
+ top: 9vw;
+ left: 1vw;
+ height: auto;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+ display: none;
+ position: absolute;
+ background-color: #f1f1f1;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
 body {
  text-align: center;
 }
@@ -92,7 +156,7 @@ color: transparent;
   margin-bottom: 20px;
   margin-top: 5vw;
   position: absolute;
-  top: 10vw;
+  top: 18vw;
   left: 1vw;
   height: auto;
     -webkit-transition: all 0.5s ease-in-out;
@@ -441,6 +505,23 @@ function setRemainingPathColor(timeLeft) {
 function setCircleDasharray() {
   const circleDasharray = `${( /*timefraction*/((timeLeft / initialTime) - (1 / initialTime) * (1 - (timeLeft / initialTime))) * FULL_DASH_ARRAY).toFixed(0)} 283`;
   document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);}
-
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
 </script>
